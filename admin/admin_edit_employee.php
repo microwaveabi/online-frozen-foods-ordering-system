@@ -6,8 +6,10 @@
     include "admin_header.php";
     include "connection.php";
     $First_Name=$_REQUEST['First_Name'];
-    $query="select * from tblemployee where First_Name='$First_Name'";
-    $result=mysqli_query($conn,$query);
+    $stmt=mysqli_prepare($conn, "select * from tblemployee where First_Name=?");
+    mysqli_stmt_bind_param($stmt, "s", $First_Name);
+    mysqli_stmt_execute($stmt);
+    $result=mysqli_stmt_get_result($stmt);
     $row=mysqli_fetch_array($result);
     ?>
     <div class="container" style="padding-top: 100px;">
